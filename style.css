@@ -1,0 +1,212 @@
+:root {
+    --primary-color: #1b5e20;
+    --accent-color: #f5f5f5;
+    --text-primary-color: #333;
+    --hover-bg: #e3f2fd;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body {
+    color: var(--text-primary-color);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .select-box {
+    position: relative;
+    width: 26rem;
+    background-color: #fff;
+    border-radius: .5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .select-box input {
+    width: 100%;
+    padding: 1rem .6rem;
+    font-size: 1.1rem;
+    border: none;
+    outline: none;
+    background: #fff;
+  }
+  
+  input[type="tel"] {
+    border-left: 1px solid #ccc;
+    border-radius: 0 .5rem .5rem 0;
+  }
+  
+  .select-box input:focus {
+    border: .1rem solid var(--primary-color);
+  }
+  
+  .selected_option {
+    background-color: var(--accent-color);
+    border-radius: .5rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .group-title {
+    font-weight: bold;
+    padding: 8px 12px;
+    background-color: #f0f0f0;
+    color: #333;
+    cursor: default;
+  }
+  
+
+  .selected_option:hover {
+    background-color: var(--hover-bg);
+  }
+  
+  .selected_option div {
+    position: relative;
+    width: 7rem;
+    height: 3rem;
+    padding: 0 2.8rem 0 .5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .selected_option div::after {
+    position: absolute;
+    content: "";
+    right: .8rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    width: .4rem;
+    height: .4rem;
+    border-right: .15rem solid var(--primary-color);
+    border-bottom: .15rem solid var(--primary-color);
+    transition: .3s;
+  }
+  
+  .selected_option div.active::after {
+    transform: translateY(-50%) rotate(225deg);
+  }
+  
+  .flag-icon {
+    width: 24px;
+    height: 16px;
+    object-fit: cover;
+    border-radius: 2px;
+  }
+  
+  .select-box .options {
+    position: absolute;
+    top: 4rem;
+    width: 100%;
+    background-color: #fff;
+    border-radius: .5rem;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+    display: none;
+    z-index: 10;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .select-box .options.active {
+    display: block;
+  }
+  
+  .select-box .options::before {
+    position: absolute;
+    content: "";
+    left: 1.2rem;
+    top: -1.2rem;
+    width: 0;
+    height: 0;
+    border: .6rem solid transparent;
+    border-bottom-color: var(--primary-color);
+  }
+  
+  input.search-box {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: .5rem .5rem 0 0;
+    padding: 1.2rem 1rem;
+    border: 2px solid red;
+    font-size: 1rem;
+  }
+  
+  input.search-box::placeholder {
+    color: #dce1f2;
+  }
+  
+  .select-box ol {
+    list-style: none;
+    max-height: 23rem;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+  }
+  
+  .select-box ol::-webkit-scrollbar {
+    width: 0.6rem;
+  }
+  
+  .select-box ol::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: .4rem;
+  }
+  
+  .select-box ol li {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .select-box ol li.hide {
+    display: none;
+  }
+  
+  .select-box ol li:not(:last-child) {
+    border-bottom: .1rem solid #f0f0f0;
+  }
+  
+  .select-box ol li:hover {
+    background-color: var(--hover-bg);
+  }
+  
+  .select-box ol li .country-name {
+    margin-left: .4rem;
+    font-weight: 500;
+  }
+  
+  .hide {
+    display: none;
+  }
+
+  .no-result-message {
+    padding: 10px;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    font-size: 14px;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
