@@ -150,7 +150,7 @@ const countries = [
   { name: "Mexico", code: "MX", phone: 52 },
   { name: "Micronesia, Federated States of", code: "FM", phone: 691 },
   { name: "Moldova, Republic of", code: "MD", phone: 373 },
-  { name: "Monaco", code: "MC", phone: 377 },
+  { name: "Monaco", code: "MC", phone: 377 }, 
   { name: "Mongolia", code: "MN", phone: 976 },
   { name: "Montenegro", code: "ME", phone: 382 },
   { name: "Montserrat", code: "MS", phone: 1664 },
@@ -372,23 +372,6 @@ function searchCountry() {
       ("00" + phone).startsWith(query);
 
     option.classList.toggle("hide", !match);
-  }
-
-  // Gérer l'affichage des titres de groupe
-  const allGroupTitles = select_box.querySelectorAll(".group-title");
-  for (const groupTitle of allGroupTitles) {
-    let next = groupTitle.nextElementSibling;
-    let hasVisibleOption = false;
-
-    while (next && !next.classList.contains("group-title")) {
-      if (!next.classList.contains("hide")) {
-        hasVisibleOption = true;
-        break;
-      }
-      next = next.nextElementSibling;
-    }
-
-    groupTitle.classList.toggle("hide", !hasVisibleOption);
   }
 
   updateNoResultMessage();
