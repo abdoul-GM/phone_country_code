@@ -16,14 +16,17 @@
                 <img src="drapeau_svg/BF.svg" alt="flag" class="flag-icon" />
                 <strong>+226</strong>
             </div>
-            <input type="tel" name="tel" placeholder="Numéro de téléphone">
+            <input type="tel" name="telephone" id="telephone"
+            placeholder="Numéro de téléphone"
+            required
+            pattern="^\d{8,15}$"
+            title="Entrez un numéro valide (8 à 15 chiffres)" />
+
         </div>
         <div class="options">
             <input type="hidden" id="country_code" name="country_code" value="00226">
             <input type="text" class="search-box" placeholder="Rechercher un pays">
-            <ol>
-
-            </ol>
+            <ol></ol>
             <div class="no-result-message"></div>
         </div>
     </div>

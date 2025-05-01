@@ -150,7 +150,7 @@ const countries = [
   { name: "Mexico", code: "MX", phone: 52 },
   { name: "Micronesia, Federated States of", code: "FM", phone: 691 },
   { name: "Moldova, Republic of", code: "MD", phone: 373 },
-  { name: "Monaco", code: "MC", phone: 377 }, 
+  { name: "Monaco", code: "MC", phone: 377 },
   { name: "Mongolia", code: "MN", phone: 976 },
   { name: "Montenegro", code: "ME", phone: 382 },
   { name: "Montserrat", code: "MS", phone: 1664 },
@@ -361,7 +361,6 @@ function selectOption() {
 function searchCountry() {
   const query = search_box.value.trim().toLowerCase().replace(/^(\+|00)/, "");
 
-  // Filtrer les options
   for (const option of options) {
     const name = option.querySelector(".country-name").innerText.toLowerCase();
     const phone = option.querySelector("strong").innerText.replace("+", "").toLowerCase();
@@ -371,11 +370,34 @@ function searchCountry() {
       phone.startsWith(query) ||
       ("00" + phone).startsWith(query);
 
-    option.classList.toggle("hide", !match);
-  }
+    if (!match && !option.classList.contains("slide-out") && !option.classList.contains("hide")) {
+      // Lancer l'animation de sortie
+      option.classList.remove("slide-in");
+      option.classList.add("slide-out");
 
-  updateNoResultMessage();
+      option.addEventListener("animationend", function handleSlideOut() {
+        option.classList.remove("slide-out");
+        option.classList.add("hide");
+        option.removeEventListener("animationend", handleSlideOut);
+        updateNoResultMessage();
+      });
+    }
+
+    else if (match && option.classList.contains("hide")) {
+      // Réactiver l'élément avec animation d’entrée
+      option.classList.remove("hide");
+      option.classList.add("slide-in");
+
+      option.addEventListener("animationend", function handleSlideIn() {
+        option.classList.remove("slide-in");
+        option.removeEventListener("animationend", handleSlideIn);
+
+        updateNoResultMessage();
+      });
+    }
+  }
 }
+
 
 function updateNoResultMessage() {
   if (options.length === 0) {
@@ -414,3 +436,61 @@ function updateNoResultMessage() {
 // Appliquer les événements
 options.forEach((option) => option.addEventListener("click", selectOption));
 search_box.addEventListener("input", searchCountry);
+
+
+// controler de saisir dans le champ téléphone
+const telephoneInput = document.querySelector("#telephone");
+
+telephoneInput.addEventListener("keypress", (e) => {
+  // Bloquer tout caractère non numérique
+  if (!/[0-9]/.test(e.key)) {
+    e.preventDefault();
+    return;
+  }
+
+  // Bloquer si la longueur dépasse 15
+  const currentValue = telephoneInput.value;
+
+  // Autoriser la sélection + remplacement
+  const selectionStart = telephoneInput.selectionStart;
+  const selectionEnd = telephoneInput.selectionEnd;
+
+  const isReplacing = selectionStart !== selectionEnd;
+
+  if (currentValue.length >= 15 && !isReplacing) {
+    console.log("Limite de 15 chiffres atteinte.");
+    telephoneInput.setCustomValidity("Numéro invalide. Entrez entre 8 et 15 chiffres.");
+    e.preventDefault();
+  } else {
+    telephoneInput.setCustomValidity("");
+  }
+});
+
+telephoneInput.addEventListener("paste", (e) => {
+  e.preventDefault(); // Empêche le collage brut
+
+  const pastedData = (e.clipboardData || window.clipboardData).getData("text");
+
+  // Ne garder que les chiffres
+  const onlyDigits = pastedData.replace(/\D/g, "");
+
+  const currentValue = telephoneInput.value;
+  const selectionStart = telephoneInput.selectionStart;
+  const selectionEnd = telephoneInput.selectionEnd;
+
+  // Calculer la nouvelle valeur après collage
+  const newValue =
+    currentValue.slice(0, selectionStart) +
+    onlyDigits +
+    currentValue.slice(selectionEnd);
+
+  // Tronquer à 15 chiffres max
+  const truncated = newValue.slice(0, 15);
+
+  // Mettre à jour la valeur du champ
+  telephoneInput.value = truncated;
+
+  // Mettre à jour la position du curseur (à la fin du collage)
+  const caretPosition = selectionStart + onlyDigits.length;
+  telephoneInput.setSelectionRange(caretPosition, caretPosition);
+});

@@ -210,3 +210,43 @@
     }
   }
   
+
+  /* === */
+  /* Animation d'entrée */
+.option.slide-in {
+  animation: slideInLeft 0.3s forwards;
+}
+
+/* Animation de sortie */
+.option.slide-out {
+  animation: slideOutRight 0.3s forwards;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* cache réel */
+.option.hide {
+  display: none;
+}
+
+/* === */
